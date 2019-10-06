@@ -19,7 +19,7 @@ $(document).ready(function(){
             finished: "So, how many correct answers did you manage to wrangle?"
         };
     
-        //Question Bank
+        //Question Bank (answer is the index of the correct choice from the answerList array)
         var triviaQuestions = [
             {	question: "Which of these things can a horse NOT do?",
                 answerList: ["Burp",
@@ -117,10 +117,10 @@ $(document).ready(function(){
                             ],
                 answer: 1,
                 image: "assets/images/Surprised_Horse_Eyes.gif",
-                answerText: "Colts are usually castrated (or gelded) between 6 and 12 months of age. Gelding has long been used as a method of controlling aggressive behavior and making farm management easier."
+                answerText: "Colts are usually castrated (or gelded) between 6 and 12 months of age. Castration has long been used as a method of controlling aggressive behavior and making farm management easier."
             },		
     
-            {	question: "Which of these is FALSE about a horse’s vision?",
+            {	question: "Which of these statements is FALSE about a horse’s vision?",
                 answerList: [	"Horses are color blind.",
                             "A horse can see almost 360 degrees.",
                             "A horse has blind spots in front, beneath its head, and directly behind.",
@@ -128,7 +128,7 @@ $(document).ready(function(){
                             ],
                 answer: 0,
                 image: "assets/images/Horse_Eye.jpg",
-                answerText: "Horses have dichromatic color vision and also the ability to switch between monocular and binocular vision."
+                answerText: "It is false that horses are color blind. Horses have dichromatic color vision and also the ability to switch between monocular and binocular vision."
             },		
     
         ];
@@ -137,23 +137,23 @@ $(document).ready(function(){
     // FUNCTIONS
     // =========
     
-        //This hides the game area when page loads
+        //This hides the game area when page first loads.
         $("#gameCol").hide();
         
-        //This captures user click on start button to create a new game
+        //This captures the user's click on Start button to start a new game.
         $("#startButton").on("click", function(){
             $("#horseshoe").hide();
             $(this).hide();
             newGame();
         });
     
-        //This captures the user's click on the reset button to create a new game
+        //This captures the user's click on the Reset button to create a new game.
         $("#startOverButton").on("click", function(){
             $(this).hide();
             newGame();
         });
     
-        //This function sets up the page for a new game emptying all areas and showing game area
+        //This function sets up the page for a new game emptying all areas and showing game area.
         function newGame(){
             $("#gameCol").show();
             $("#finalMessage").empty();
@@ -169,7 +169,7 @@ $(document).ready(function(){
             newQuestion();
         }
     
-        //This function displays the next question
+        //This function displays the next question.
         function newQuestion(){
             $("#message").empty();
             $("#correctedAnswer").empty();
@@ -177,12 +177,12 @@ $(document).ready(function(){
             $("#gifCaption").hide();
             answered = true;
             
-            //This function displays the new question
-            $("#currentQuestion").html("Question " + (currentQuestion+1) + " of " + triviaQuestions.length);
+            //This displays the new question and shows which question of the 10 is being displayed.
+            $("#currentQuestion").html("QUESTION " + (currentQuestion+1) + " of " + triviaQuestions.length);
             $(".question").html(triviaQuestions[currentQuestion].question);
     
-            //This function displays the new questions's answer options in multiple choice form
-            for(var i = 0; i <= 5; i++){
+            //This function displays the new questions's answer options in multiple-choice form (each question has 4 answer choices).
+            for(var i = 0; i <= 4; i++){
     
                 var choices = $("<div>");
                 choices.text(triviaQuestions[currentQuestion].answerList[i]);
@@ -191,27 +191,28 @@ $(document).ready(function(){
                 $(".answerList").append(choices);
             }
     
-            //This sets the timer
+            //This sets the timer.
             countdown();
     
-            //When user clicks on an answer, this pauses the time and displays the correct answer if choice was incorrect 
+            //When user clicks on an answer, this pauses the time and displays the correct answer if choice was incorrect or unanswered. 
             $(".thisChoice").on("click",function(){
                     userSelect = $(this).data("index");
                     clearInterval(time);
                     answerPage();
+                    
                 });
             }
     
-        //This function is for the timer countdown
+        //This function is for the timer countdown.
         function countdown(){
             seconds = 15;
             $("#timeLeft").html("00:" + seconds);
             answered = true;
-            //Sets a delay of one second before the timer starts
+            //Sets a delay of one second before the timer starts.
             time = setInterval(showCountdown, 1000);
         }
     
-        //This function displays the countdown
+        //This function displays the countdown.
         function showCountdown(){
             seconds--;
     
@@ -228,32 +229,32 @@ $(document).ready(function(){
             }
         }
     
-        //This function takes the user to the answer page after the user selects an answer or timer runs out
+        //This function displays the answer page after the user selects an answer or timer runs out.
         function answerPage(){
             $("#currentQuestion").empty();
-            $(".thisChoice").empty(); //Clears question page
+            $(".thisChoice").empty();
             $(".question").empty();
             $("#gif").show();
             $("#gifCaption").show();
-    
+            
             var rightAnswerText = triviaQuestions[currentQuestion].answerList[triviaQuestions[currentQuestion].answer];
             var rightAnswerIndex = triviaQuestions[currentQuestion].answer;
     
-            //This adds the jpg or gif that corresponds to this quesiton
+            //This adds the jpg or gif that corresponds to this question.
             var gifImageLink = triviaQuestions[currentQuestion].image;
             var newGif = $("<img>");
             newGif.attr("src", gifImageLink);
             newGif.addClass("gifImg");
             $("#gif").html(newGif);
     
-           //This adds a line of text below the image explaining a little more about correct answer.
+           //This adds text below the image explaining more about the correct answer.
             var gifCaption = triviaQuestions[currentQuestion].answerText;
                 newCaption = $("<div>");
                 newCaption.html(gifCaption);
                 newCaption.addClass("gifCaption");
                 $("#gifCaption").html(newCaption);
             
-            //This checks to see if user choice is correct, incorrect, or unanswered
+            //This checks to see if user's choice is correct or incorrect, or if the question is unanswered
             if((userSelect === rightAnswerIndex) && (answered === true)){
                 correctAnswer++;
                 $("#message").html(messages.correct);
@@ -268,7 +269,7 @@ $(document).ready(function(){
                 answered = true;
             }
             
-            if(currentQuestion === (triviaQuestions.length-1)){
+            if(currentQuestion === (triviaQuestions.length - 1)){
                 setTimeout(scoreboard, 6000);
             } else{
                 currentQuestion++;
@@ -276,7 +277,7 @@ $(document).ready(function(){
             }	
         }
     
-        //Function tp display the game stats
+        //Function to display the game stats
         function scoreboard(){
             $("#timeLeft").empty();
             $("#message").empty();
@@ -287,7 +288,7 @@ $(document).ready(function(){
             $("#finalMessage").html(messages.finished);
             $("#correctAnswers").html("Correct Answers: " + correctAnswer);
             $("#incorrectAnswers").html("Incorrect Answers: " + incorrectAnswer);
-            $("'#unanswered").html("Unanswered: " + unanswered);
+            $("#unanswered").html("Unanswered: " + unanswered);
             $("#startOverButton").addClass('reset');
             $("#startOverButton").show();
             $("#startOverButton").html("Mount Up & Try Again?");

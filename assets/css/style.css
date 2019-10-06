@@ -4,13 +4,24 @@ body {
 }
 
 #Beauty_Portrait {
-    max-width: 25%;
+    max-width: 40%;
+    height: auto;
+    align-self: auto;
+    background-position: top;
 }
 
 
 h1 {
     font-family: 'Rancho', cursive;
-    font-size: 100px;
+    font-size: 700%;
+    color: #ffffac;
+    background-color: #702323;
+    text-align: center;
+}
+
+#instructions {
+    font-family: 'Rancho', cursive;
+    font-size: 30px;
     color: #ffffac;
     background-color: #702323;
     text-align: center;
@@ -28,8 +39,8 @@ h1 {
 
 #gameCol {
     text-align: center;
-    border: 2px solid #ffffac;
-    border-radius: 5px;
+    border: 5px solid #ffffac;
+    border-radius: 10px;
     padding: 30px;
     min-height: 300px;
     margin-bottom: 60px;
@@ -63,7 +74,6 @@ h1 {
     color: white;
     text-align: left;
     font-size: 100%;
-    text-transform: uppercase;
 }
 
 .question {
