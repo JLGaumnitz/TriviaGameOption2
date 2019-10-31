@@ -1,4 +1,5 @@
 # TriviaGameOption2
+https://jlgaumnitz.github.io/TriviaGameOption2/
 
 Equine Trivia Game, Option 2
 created by Jennifer Gaumnitz
